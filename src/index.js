@@ -1,7 +1,7 @@
-// import './styles.css';
-// import './reset.css';
+import './reset.css';
+import './styles.css';
 
-const masterController = (() => {
+export const masterController = (() => {
     const toDosArray = [];
     const projectsArray = [];
     
@@ -11,7 +11,18 @@ const masterController = (() => {
     };
 })();
 
-// TO-DOS STUFF
+export const utilityFunctions = (() => {
+    function getRandomNumber() {
+        return Math.random() * 360; // Returns a random number between 0 and 180
+    }
+   
+    return {
+        getRandomNumber
+    }
+})();
+
+// CLASSES
+
 class ToDo {
     constructor(name, description, priority, project) {
         this.name = name;
@@ -20,7 +31,6 @@ class ToDo {
         this.done = false;
         this.project = !project ? "No Project" : project;
 
-        // Automatically add this to the toDosArray
         toDosManipulator.todoPushArray(this);
         projectsManipulator.addToProject(this, this.project);
     }
@@ -29,63 +39,31 @@ class ToDo {
         this.project = project;
         projectsManipulator.addToProject(this, this.project)
     }
-};
+}
 
-const toDosManipulator = (() => {
-
-    // Called when a todo gets created
-    function todoPushArray(todo) {
-        masterController.toDosArray.push(todo);
-    }
-
-    function getAllToDos() {
-       return masterController.toDosArray;
-    };
-
-    return {
-        todoPushArray,
-        getAllToDos
-    };
-})();
-
-// PROJECTS STUFF
 class Project {
     constructor(name, description) {
         this.name = name;
         this.description = description;
         this.toDos = [];
 
-        projectsManipulator.projectPushArray(this)
+        projectsManipulator.projectPushArray(this);
+        domManipulator.loadProjects();
     }
 }
-
-const projectsManipulator = (() => {
-
-    // Called when a project gets created
-    function projectPushArray(project) {
-        masterController.projectsArray.push(project);
-    }
-
-    function addToProject(todo, projectName) {
-        // LOOP THROUGH ARRAY TO FIND PROJECT
-        let find = masterController.projectsArray.find(project => project.name === projectName);
-        // ADD TODO TO PROJECT
-        if (find) {
-            find.toDos.push(todo);
-        } else {
-            console.error("xd")
-        }}
-
-    function getAllProjects() {
-        return masterController.projectsArray();
-     };
-
-    return {
-        projectPushArray,
-        getAllProjects,
-        addToProject
-    }
-})();
 const projectDefault = new Project('No Project');
 
 
+import generateStuff from './generate.js'
+import {domManipulator, toDosManipulator, projectsManipulator} from './manipulators.js'
+
+// TESTING 
+const project1 = new Project("Test Project");
+const todo1 = new ToDo("tes2323t", "test1", "HIGH")
+
+const project2 = new Project("testProject1", "lorem ipsuuuuuuuuuuuuuuuuuuuum");
+const todo2 = new ToDo("HELLOOO")
+
+// ADD EVENT LISTNEEEERS
+document.addEventListener('DOMContentLoaded', generateStuff()
+)

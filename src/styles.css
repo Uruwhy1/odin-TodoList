@@ -1,5 +1,119 @@
-body h1 {
+/* roboto-regular - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/roboto-v30-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
+/* roboto-500 - latin */
+@font-face {
+font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 500;
+src: url('./fonts/roboto-v30-latin-500.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* roboto-700 - latin */
+@font-face {
+font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 700;
+src: url('./fonts/roboto-v30-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* roboto-900 - latin */
+@font-face {
+font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 900;
+src: url('./fonts/roboto-v30-latin-900.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+  
+/* COLOR VARIABLES */
+:root {
+    --taskbar-background: #EEEEEE; /* Off-white background for taskbar */
+    --taskbar-accent: rgb(255, 105, 105);
+    --font-main: #414141;
+}
+/* ------------- */
+
+body {
+    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    grid-template-areas: 'taskbar main-panel';
+}
+
+@media screen and (max-width: 1000px) {
+    body{
+        grid-template-columns: 250px 1fr;
+    }
+}
+
+
+.taskbar {
+    background-color: var(--taskbar-background);
+    display: grid;
+    padding: 15px;
+    grid-template-rows: 70px 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    gap: 20px;
+
+    font-size: 1.3em;
+    font-weight: normal;
+    color: var(--font-main);
+}
+.taskbar .list:last-child {
+    align-self: end;
+}
+
+
+.taskbar h1 {
+    color: var(--taskbar-accent);
+    font-weight: 900;
+}
+.title-color {
+    color: #31c45d;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    transition: 0.2s;
+    cursor: pointer;
+}
+.list-item:hover {
+    color: var(--taskbar-accent);
+}
+.list-item .header {
     color: red;
-    font-size: 100px;
+}
+
+
+.projects-header {
+    font-size: 1.2em;
+    font-weight: 600;   
+    color: #000;
+
+}
+
+
+.projects {
+    margin-left: 45px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
