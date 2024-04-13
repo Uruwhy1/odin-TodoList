@@ -1,0 +1,50 @@
+.right-side {
+    grid-area: main-panel;
+    margin: 70px 15%;
+
+    display: grid;
+    grid-template-rows: 50px 1fr;
+    grid-template-areas: 'head'
+                         'content';
+    gap: 30px;
+
+}
+
+.subheader {
+    font-size: 1.2em;
+    color: gray;
+}
+
+/* TASKS INBOX */
+
+.tasks-inbox {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-container {
+    font-size: 1.2em;
+    padding: 10px;
+    border-bottom: 1px solid rgb(182, 182, 182);
+
+    display: grid;
+    grid-template-columns: 25px 1fr 70px;
+    grid-template-rows: 25px;
+    place-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+
+.task-container svg {
+    vertical-align: text-bottom;
+    transition: 0.1s;
+}
+.task-container svg:hover {
+    transform: scale(1.1);
+}
+
+.task-container p:first-of-type {
+    font-weight: 500;
+}
+

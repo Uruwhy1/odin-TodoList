@@ -55,7 +55,7 @@ src: url('./fonts/roboto-v30-latin-900.woff2') format('woff2'); /* Chrome 36+, O
 :root {
     --taskbar-background: rgb(251, 250, 248); /* Off-white background for taskbar */
     --taskbar-accent: rgb(255, 105, 105);
-    --taskbar-hover: #f3efec;
+    --hover: #f3efec;
     --font-main: #414141;
 }
 /* ------------- */
@@ -72,6 +72,7 @@ src: url('./fonts/roboto-v30-latin-900.woff2') format('woff2'); /* Chrome 36+, O
         transform: rotate(360deg);
     }
 }
+
 
 
 
@@ -93,91 +94,3 @@ body {
 }
 
 
-.taskbar {
-    background-color: var(--taskbar-background);
-    display: grid;
-    padding: 15px;
-    grid-template-rows: 50px 160px 1fr 1fr 1fr;
-    grid-template-columns: 1fr;
-    gap: 22px;
-
-    font-size: 1.3em;
-    color: var(--font-main);
-}
-.taskbar .list:last-child {
-    align-self: end;
-}
-
-.taskbar h1 {
-    color: var(--font-main);
-    font-family: Barlow;
-    font-weight: 500;
-}
-.title-color {
-    color: var(--taskbar-accent);
-}
-
-.list {
-    display: flex;
-    flex-direction: column;
-}
-
-.list-item {
-    display: flex;
-    align-items: center;
-    padding: 6px;
-    gap: 10px;
-
-    font-weight: 300;
-    cursor: pointer;
-    border-radius: 5px;
-
-    height: 50px;
-}
-.list-item:hover {
-    background-color: var(--taskbar-hover);
-}
-
-
-.list-item svg {
-    width: 22px;
-    height: 22px;
-
-    stroke-width: 1;
-}
-
-.projects-header {
-    font-weight: 600;   
-    color: #494949;
-}
-
-.projects {
-    margin-left: 45px;
-    display: flex;
-    align-content: center;
-    flex-direction: column;
-    gap: 0;
-}
-
-.projects div {
-    padding: 6px;
-    border-radius: 5px;
-
-    font-weight: 300;
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.projects div:hover {
-    background-color: var(--taskbar-hover);
-}
-/* ALIGN WITH SVG */
-.projects div svg {
-    vertical-align: text-bottom;
-    margin-top: 1px;
-}
-
-.settings:hover svg {
-    animation: rotate 1s 1;
-}
