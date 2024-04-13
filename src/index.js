@@ -13,11 +13,20 @@ export const masterController = (() => {
 
 export const utilityFunctions = (() => {
     function getRandomNumber() {
-        return Math.random() * 360; // Returns a random number between 0 and 180
+        return Math.random() * 360; 
+    }
+
+    function getRandomColor() {
+        const hue = getRandomNumber();
+        const saturation = '30%'; 
+        const lightness = '60%'; 
+
+        return `hsl(${hue}, ${saturation}, ${lightness})`;
     }
    
     return {
-        getRandomNumber
+        getRandomNumber,
+        getRandomColor
     }
 })();
 
