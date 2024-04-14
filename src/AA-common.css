@@ -73,8 +73,27 @@ src: url('./fonts/roboto-v30-latin-900.woff2') format('woff2'); /* Chrome 36+, O
     }
 }
 
+@keyframes revealAnimation {
+    0% {
+      opacity: 0;
+      transform: translateY(50px) scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
 
-
+@keyframes notRevealAnimation {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    100% {
+      opacity: 0;
+      transform: translateY(50px) scale(0.8);
+    }
+  }
 
 /* --------------- */
 

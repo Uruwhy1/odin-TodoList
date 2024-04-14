@@ -1,4 +1,4 @@
-import { toDosManipulator } from "./manipulators.js";
+import { toDosManipulator } from "./BB-manipulators.js";
 
 export default function generateStuff(param) {
 

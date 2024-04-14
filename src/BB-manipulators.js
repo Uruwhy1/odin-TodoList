@@ -1,4 +1,4 @@
-import { masterController, utilityFunctions } from "./index.js";
+import { masterController, utilityFunctions } from "./BB-index.js";
 
 export const toDosManipulator = (() => {
     function todoPushArray(todo) {
