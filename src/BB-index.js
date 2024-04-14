@@ -35,7 +35,7 @@ export const utilityFunctions = (() => {
     }
 })();
 
-let currentPage = 'inbox';
+export let currentPage = 'Inbox';
 
 // CLASSES
 
@@ -85,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function(event) {
         event.preventDefault();
         
-
         const name = document.querySelector('#name').value;
         const description = document.querySelector('#description').value;
         const priority = document.querySelector('#priority').value;
@@ -102,9 +101,17 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('#project').value = '';
 
         // render the tasks list and close modal
-        generateStuff(currentPage);
         domManipulator.addTask()
-        console.log(dueDate);
+        generateStuff(currentPage);
+    });
+
+    const sidebarButtons = document.querySelectorAll('.tasks .list-item');
+    sidebarButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            let pElement = button.lastElementChild;
+            generateStuff(pElement.textContent);
+            currentPage = pElement.textContent;
+        });
     });
 } 
 )
