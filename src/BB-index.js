@@ -3,6 +3,9 @@ import './AA-common.css';
 import './AA-sidebar.css';
 import './AA-right-side.css'
 
+import generateStuff from './BB-generate.js'
+import {domManipulator, toDosManipulator, projectsManipulator} from './BB-manipulators.js'
+
 export const masterController = (() => {
     const toDosArray = [];
     const projectsArray = [];
@@ -32,14 +35,16 @@ export const utilityFunctions = (() => {
     }
 })();
 
+let currentPage = 'inbox';
+
 // CLASSES
 
 class ToDo {
-    constructor(name, description, priority, project, dueDate) {
+    constructor(name, description, priority, dueDate, project,) {
         this.name = name;
         this.description = description;
         this.priority = priority;
-        this.dueDate = this.dueDate;
+        this.dueDate = dueDate;
         this.done = false;
         this.project = !project ? "No Project" : project;
 
@@ -65,44 +70,48 @@ class Project {
 }
 const projectDefault = new Project('No Project');
 
-// ADD TASK FORM
-function addTask(){
-
-    // display form and animate
-    let form = document.querySelector('.form');
-    if (form.style.display === 'block') {
-        form.style.animation = 'notRevealAnimation 1 0.2s ease forwards'
-        setTimeout(() => {
-            form.style.display = 'none';
-        }, 300);
-    } else {
-        form.style.display = 'block';
-        form.style.animation = 'revealAnimation 1 0.3s ease forwards'
-    }
-        document.querySelector('.right-side').appendChild(form);
-
-    // other thing
-}
 
 
-// IMPORTS
-
-import generateStuff from './BB-generate.js'
-import {domManipulator, toDosManipulator, projectsManipulator} from './BB-manipulators.js'
-
-// TESTING 
-const project1 = new Project("Test Project");
-const todo1 = new ToDo("name", "description", "HIGH")
-
-const project2 = new Project("testProject1", "lorem ipsuuuuuuuuuuuuuuuuuuuum");
-const todo2 = new ToDo("name2", "description", "MEDIUM")
 
 // ADD EVENT LISTNEEEERS
 document.addEventListener('DOMContentLoaded', function() {
-    generateStuff("inbox");
+    generateStuff(currentPage);
 
     const button = document.querySelector('.add-task');
-    button.addEventListener('click', addTask);
+    button.addEventListener('click', domManipulator.addTask);
+
+
+    const form = document.querySelector('.form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+
+        const name = document.querySelector('#name').value;
+        const description = document.querySelector('#description').value;
+        const priority = document.querySelector('#priority').value;
+        const dueDate = new Date(document.querySelector('#due-date').value);
+        const project = document.querySelector('#project').value;
+
+        const newTodo = new ToDo(name, description, priority, dueDate, project);
+
+        // clear inputs after submission
+        document.querySelector('#name').value = '';
+        document.querySelector('#description').value = '';
+        document.querySelector('#priority').value = '';
+        document.querySelector('#due-date').value = '';
+        document.querySelector('#project').value = '';
+
+        // render the tasks list and close modal
+        generateStuff(currentPage);
+        domManipulator.addTask()
+        console.log(dueDate);
+    });
 } 
 )
 
+// TESTING 
+const project1 = new Project("Test Project");
+const todo1 = new ToDo("name", "description", "HIGH", new Date())
+
+const project2 = new Project("testProject1", "lorem ipsuuuuuuuuuuuuuuuuuuuum");
+const todo2 = new ToDo("name2", "description", "MEDIUM", new Date())

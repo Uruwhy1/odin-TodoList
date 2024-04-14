@@ -70,9 +70,25 @@
         <div class="head">
             <h1 class="header"></h1>
             <p class="subheader"></p>
+            <div class="right-container"></div>
         </div>
-        <div class="form"></div>
-        
+        <div class="form" class="hidden">
+            <form id="modal-form">
+                <!-- Form content goes here -->
+                <input required id="name" type="text" name="task-name" placeholder="Task Name">
+                <input id="description" type="text" name="task-name" placeholder="Description">
+                <select required name="priority" id="priority">
+                    <option value="LOW">🟢 LOW</option>
+                    <option value="MEDIUM" selected>🟡 MEDIUM</option>
+                    <option value="HIGH">🔴 HIGH</option>
+                </select>
+                <input required type="datetime-local" name="date" id="due-date">
+                <select required name="project" id="project">
+                    <option value="No Project" selected>No Project</option>
+                </select>
+              <button class="add-task-button" type="submit">Add Task</button>
+            </form>
+          </div>
     </div>
 </body>
 </html>

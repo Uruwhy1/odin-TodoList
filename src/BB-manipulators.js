@@ -43,11 +43,14 @@ export const projectsManipulator = (() => {
 export const domManipulator = (() => {
     function loadProjects() {
         let container = document.querySelector('.projects');
-        
-        // Clear existing project elements from container
-        container.innerHTML = '';
+        let containerForm = document.querySelector('#project');
 
-        // Append project elements to container
+        // Clear existing project elements from containers
+        container.innerHTML = '';
+        containerForm.innerHTML = '';
+        
+
+        // Append project elements to sidebar
         projectsManipulator.getAllProjects().filter(project => project.name !== "No Project").forEach(element => {
             let div = document.createElement('div');
             let color = utilityFunctions.getRandomColor();
@@ -60,13 +63,42 @@ export const domManipulator = (() => {
             project.textContent = element.name;
             project.style.color = color;
             div.appendChild(project); 
-
-
             container.appendChild(div);
         });
+
+        // Append project elements to form
+        projectsManipulator.getAllProjects().forEach(element => {
+            let option = document.createElement('option');
+            option.value = element.name;
+            option.textContent = element.name;
+
+            containerForm.appendChild(option);
+        })
     }   
+
+    // ADD TASK FORM
+    function addTask(){
+        let form = document.querySelector('.form');
+
+        // Get today's date in the format YYYY-MM-DD
+        const today = new Date();
+        // Set the value of the date input to today's date
+        document.getElementById('due-date').value = today;
+        
+        // display form and animate
+        if (form.style.display === 'block') {
+            form.style.animation = 'notRevealAnimation 1 0.2s ease forwards'
+            setTimeout(() => {
+                form.style.display = 'none';
+            }, 300);
+        } else {
+            form.style.display = 'block';
+            form.style.animation = 'revealAnimation 1 0.3s ease forwards'
+        }
+}
    
     return {
-        loadProjects
+        loadProjects,
+        addTask
     }
 })();

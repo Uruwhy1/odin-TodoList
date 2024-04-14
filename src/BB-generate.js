@@ -7,9 +7,9 @@ export default function generateStuff(param) {
         let header = document.querySelector('.header');
         header.textContent = 'Inbox';
         let subheader = document.querySelector('.subheader')
-        subheader.textContent = 'Tasks without any project assigned.'
+        subheader.textContent = 'Tasks without any project assigned. [NOT FILTERED YET]'
 
-        let div = document.createElement('div');
+        let div = document.querySelector('.right-container');
         div.classList.add('tasks-inbox')
 
         const renderTasks = () => {
@@ -44,12 +44,12 @@ export default function generateStuff(param) {
 
                     let taskName = document.createElement('p');
                     taskName.textContent = element.name;
-                    let taskPriority = document.createElement('p');
-                    
+                    let taskDue = document.createElement('p');
+                    taskDue.textContent = (element.dueDate).getHours();
 
                     taskContainer.appendChild(taskDone);
                     taskContainer.appendChild(taskName);
-                    taskContainer.appendChild(taskPriority);
+                    taskContainer.appendChild(taskDue);
 
                     div.appendChild(taskContainer);
                 }
