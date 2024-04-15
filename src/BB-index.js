@@ -2,9 +2,11 @@ import './AA-reset.css';
 import './AA-common.css';
 import './AA-sidebar.css';
 import './AA-right-side.css'
+import { format, compareAsc, addDays } from "date-fns";
 
 import generateStuff from './BB-generate.js'
 import {domManipulator, toDosManipulator, projectsManipulator} from './BB-manipulators.js'
+import { setDate } from 'date-fns/setDate';
 
 export const masterController = (() => {
     const toDosArray = [];
@@ -28,10 +30,15 @@ export const utilityFunctions = (() => {
 
         return `hsl(${hue}, ${saturation}, ${lightness})`;
     }
-   
+
+    function today() {
+            return new Date();
+    }
+
     return {
         getRandomNumber,
-        getRandomColor
+        getRandomColor,
+        today
     }
 })();
 
@@ -88,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const name = document.querySelector('#name').value;
         const description = document.querySelector('#description').value;
         const priority = document.querySelector('#priority').value;
-        const dueDate = new Date(document.querySelector('#due-date').value);
+        const dueDate = new Date(addDays(document.querySelector('#due-date').value, 1));
         const project = document.querySelector('#project').value;
 
         const newTodo = new ToDo(name, description, priority, dueDate, project);
@@ -122,3 +129,4 @@ const todo1 = new ToDo("name", "description", "HIGH", new Date())
 
 const project2 = new Project("testProject1", "lorem ipsuuuuuuuuuuuuuuuuuuuum");
 const todo2 = new ToDo("name2", "description", "MEDIUM", new Date())
+todo2.dueDate = addDays(todo2.dueDate, 1)

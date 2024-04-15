@@ -42,7 +42,7 @@
     border-bottom: 1px solid rgb(182, 182, 182);
 
     display: grid;
-    grid-template-columns: 25px 1fr 70px;
+    grid-template-columns: 25px 1fr 100px;
     grid-template-rows: 25px;
     place-content: center;
     align-items: center;
@@ -50,16 +50,23 @@
 }
 
 
-.task-container svg {
+.task-container .checkbox svg {
     vertical-align: text-bottom;
     transition: 0.1s;
 }
-.task-container svg:hover {
+.task-container .checkbox svg:hover {
     transform: scale(1.1);
     cursor: pointer;
 }
 
-.task-container p:first-of-type {
+.task-container .bold {
     font-weight: 500;
 }
 
+.task-container div {
+    display: flex;
+    font-size: 1em;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
