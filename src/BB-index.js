@@ -2,11 +2,9 @@ import './AA-reset.css';
 import './AA-common.css';
 import './AA-sidebar.css';
 import './AA-right-side.css'
-import { format, compareAsc, addDays } from "date-fns";
 
 import generateStuff from './BB-generate.js'
 import {domManipulator, toDosManipulator, projectsManipulator} from './BB-manipulators.js'
-import { setDate } from 'date-fns/setDate';
 
 export const masterController = (() => {
     const toDosArray = [];
@@ -19,6 +17,15 @@ export const masterController = (() => {
 })();
 
 export const utilityFunctions = (() => {
+    let currentPage = 'Inbox';
+    function setCurrentPage(param) {
+        currentPage = param;
+    }
+    function getCurrentPage() {
+        return currentPage;
+    }
+
+
     function getRandomNumber() {
         return Math.random() * 360; 
     }
@@ -35,14 +42,15 @@ export const utilityFunctions = (() => {
             return new Date();
     }
 
+    
     return {
         getRandomNumber,
         getRandomColor,
-        today
+        today,
+        setCurrentPage,
+        getCurrentPage
     }
-})();
-
-export let currentPage = 'Inbox';
+})(); 
 
 // CLASSES
 
@@ -80,12 +88,14 @@ const projectDefault = new Project('No Project');
 
 
 
-// ADD EVENT LISTNEEEERS
+// EVENT LISTENERS ON LOAD
 document.addEventListener('DOMContentLoaded', function() {
-    generateStuff(currentPage);
+    generateStuff(utilityFunctions.getCurrentPage());
 
     const button = document.querySelector('.add-task');
-    button.addEventListener('click', domManipulator.addTask);
+    button.addEventListener('click', domManipulator.addTaskForm);
+    const closeFormButton = document.querySelector('.close-button');
+    closeFormButton.addEventListener('click', domManipulator.addTaskForm);
 
 
     const form = document.querySelector('.form');
@@ -95,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const name = document.querySelector('#name').value;
         const description = document.querySelector('#description').value;
         const priority = document.querySelector('#priority').value;
-        const dueDate = new Date(addDays(document.querySelector('#due-date').value, 1));
+        const dueDate = new Date(document.querySelector('#due-date').value);
         const project = document.querySelector('#project').value;
 
         const newTodo = new ToDo(name, description, priority, dueDate, project);
@@ -108,8 +118,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('#project').value = '';
 
         // render the tasks list and close modal
-        domManipulator.addTask()
-        generateStuff(currentPage);
+        domManipulator.addTaskForm()
+        generateStuff(utilityFunctions.getCurrentPage());
     });
 
     const sidebarButtons = document.querySelectorAll('.tasks .list-item');
@@ -117,16 +127,16 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             let pElement = button.lastElementChild;
             generateStuff(pElement.textContent);
-            currentPage = pElement.textContent;
+            utilityFunctions.setCurrentPage(pElement.textContent);
         });
     });
+
 } 
 )
 
 // TESTING 
-const project1 = new Project("Test Project");
-const todo1 = new ToDo("name", "description", "HIGH", new Date())
+const project1 = new Project("Test Project", "this is the project description!");
+const todo1 = new ToDo("← Press to mark as done.", "description", "HIGH", new Date())
 
 const project2 = new Project("testProject1", "lorem ipsuuuuuuuuuuuuuuuuuuuum");
 const todo2 = new ToDo("name2", "description", "MEDIUM", new Date())
-todo2.dueDate = addDays(todo2.dueDate, 1)

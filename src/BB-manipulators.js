@@ -1,4 +1,5 @@
 import { masterController, utilityFunctions } from "./BB-index.js";
+import generateStuff from './BB-generate.js'
 
 export const toDosManipulator = (() => {
     function todoPushArray(todo) {
@@ -64,6 +65,11 @@ export const domManipulator = (() => {
             project.style.color = color;
             div.appendChild(project); 
             container.appendChild(div);
+
+            div.addEventListener('click', function() {
+                generateStuff(element);
+                utilityFunctions.setCurrentPage(element.name);
+    });
         });
 
         // Append project elements to form
@@ -77,17 +83,15 @@ export const domManipulator = (() => {
     }   
 
     // ADD TASK FORM
-    function addTask(){
+    function addTaskForm(){
         let form = document.querySelector('.form');
 
-        // Get today's date in the format YYYY-MM-DD
-        const today = new Date();
         // Set the value of the date input to today's date
-        document.getElementById('due-date').value = today;
+        document.getElementById('due-date').value = utilityFunctions.today().toISOString().split('T')[0];
         
         // display form and animate
-        if (form.style.display === 'block') {
-            form.style.animation = 'notRevealAnimation 1 0.2s ease forwards'
+        if (form.style.display == 'block') {
+            form.style.animation = 'notRevealAnimation 1 0.3s ease forwards'
             setTimeout(() => {
                 form.style.display = 'none';
             }, 300);
@@ -99,6 +103,6 @@ export const domManipulator = (() => {
    
     return {
         loadProjects,
-        addTask
+        addTaskForm
     }
 })();

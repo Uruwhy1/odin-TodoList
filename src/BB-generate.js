@@ -1,6 +1,6 @@
-import { toDosManipulator } from "./BB-manipulators.js";
-import { currentPage, utilityFunctions } from './BB-index.js'
-import { format, isAfter, isBefore, isThisWeek, isToday, isTomorrow } from "date-fns";
+import { toDosManipulator, projectsManipulator } from "./BB-manipulators.js";
+import { utilityFunctions } from './BB-index.js'
+import { addDays, format, isBefore, isThisWeek, isToday, isTomorrow } from "date-fns";
 
 export default function generateStuff(param) {
 
@@ -15,6 +15,11 @@ export default function generateStuff(param) {
         let taskContainer = document.createElement('div');
         taskContainer.classList.add('task-container');
         
+        let infoContainer = document.createElement('div');
+        infoContainer.classList.add('info-container')
+        infoContainer.addEventListener('click', function() {
+            openTaskDetails(div, element)
+        })
 
         let taskDone = document.createElement('svg');
         taskDone.classList.add('checkbox')
@@ -32,7 +37,7 @@ export default function generateStuff(param) {
             element.done = !element.done;
             taskDone.style.animation = "rotate 0.5s 1"
             setTimeout(() => {
-                generateStuff(currentPage); // re render task list with delay
+                generateStuff(utilityFunctions.getCurrentPage()); // re render task list with delay
             }, 500);
             
         });
@@ -40,80 +45,154 @@ export default function generateStuff(param) {
         let taskName = document.createElement('p');
         taskName.textContent = element.name;
         taskName.classList.add('bold')
+        
 
-
-        let dateDiv = document.createElement('div');
         let dueString = document.createElement('p');
-        dueString.textContent = format(element.dueDate, "LLL d");
+        dueString.textContent = format(addDays(element.dueDate, 1), "LLL d" );
         if (isBefore(element.dueDate, utilityFunctions.today())) {
-            dateDiv.style.color = "red";
-            dateDiv.classList.add('bold')
-            dateDiv.style.textDecoration = "underline"
+            dueString.style.color = "red";
+            dueString.classList.add('bold')
+            dueString.style.textDecoration = "underline"
         }
-        dateDiv.appendChild(dueString);
         
         taskContainer.appendChild(taskDone);
-        taskContainer.appendChild(taskName);
-        taskContainer.appendChild(dateDiv);
+        infoContainer.appendChild(taskName);
+        infoContainer.appendChild(dueString);
+        taskContainer.appendChild(infoContainer)
 
         div.appendChild(taskContainer);
     }
 
-    if (param == "Inbox") {
-        header.textContent = 'Inbox';
-        subheader.textContent = 'Tasks without any project assigned.'
-
-        // render only tasks without a project assigned and not done
-        toDosManipulator.getAllToDos().filter(task => task.project == 'No Project').forEach(element => {
-            if (!element.done) {
-                renderTask(element)
-            }
-        });
-
-        // Append the list of tasks to the DOM
-        document.querySelector('.right-side').appendChild(div);
-    }
-    if (param == "Today") {
-        header.textContent = 'Today';
-        subheader.textContent = 'Tasks which are due today.'
-
-
-        // render only tasks which are due today and not done
-        toDosManipulator.getAllToDos().filter(task => isToday(task.dueDate)).forEach(element => {
-            if (!element.done) {
-                renderTask(element)
-            } 
-        }); 
-        // Append the list of tasks to the DOM
-        document.querySelector('.right-side').appendChild(div);
-    }
-    if (param == "Tomorrow") {
-        header.textContent = 'Tomorrow';
-        subheader.textContent = 'Tasks which are due tomorrow.'
-
-        // render only tasks which are due tomorrow and not done
-        toDosManipulator.getAllToDos().filter(task => isTomorrow(task.dueDate)).forEach(element => {
-            if (!element.done) {
-                renderTask(element)
-            } 
-        }); 
-
-        // Append the list of tasks to the DOM
-        document.querySelector('.right-side').appendChild(div);
-    }
-    if (param == "This Week") {
-        header.textContent = 'This Week';
-        subheader.textContent = 'Tasks which are due in this week.'
-
-        // render only tasks which are due this week and not done
-        toDosManipulator.getAllToDos().filter(task => isThisWeek(task.dueDate)).forEach(element => {
-            if (!element.done) {
-                renderTask(element)
-            } 
-        }); 
-
-        // Append the list of tasks to the DOM
-        document.querySelector('.right-side').appendChild(div);
-    }
+    switch (param) {
+        case "Inbox":
+            header.textContent = 'Inbox';
+            subheader.textContent = 'Tasks without any project assigned.';
+            // Render only tasks without a project assigned and not done
+            toDosManipulator.getAllToDos().filter(task => task.project === 'No Project').forEach(element => {
+                if (!element.done) {
+                    renderTask(element);
+                }
+            });
+            break;
+    
+        case "Today":
+            header.textContent = 'Today';
+            subheader.textContent = 'Tasks which are due today.';
+    
+            // Render only tasks which are due today and not done
+            toDosManipulator.getAllToDos().filter(task => isToday(addDays(task.dueDate, 1))).forEach(element => {
+                if (!element.done) {
+                    renderTask(element);
+                }
+            });
+            break;
+    
+        case "Tomorrow":
+            header.textContent = 'Tomorrow';
+            subheader.textContent = 'Tasks which are due tomorrow.';
+    
+            // Render only tasks which are due tomorrow and not done
+            toDosManipulator.getAllToDos().filter(task => isTomorrow(addDays(task.dueDate, 1))).forEach(element => {
+                if (!element.done) {
+                    renderTask(element);
+                }
+            });
+            break;
+    
+        case "This Week":
+            header.textContent = 'This Week';
+            subheader.textContent = 'Tasks which are due in this week.';
+    
+            // Render only tasks which are due this week and not done
+            toDosManipulator.getAllToDos().filter(task => isThisWeek(addDays(task.dueDate, 1))).forEach(element => {
+                if (!element.done) {
+                    renderTask(element);
+                }
+            });
+            break;
+    
+        // For when sending projects
+        default:
+            header.textContent = param.name;
+            subheader.textContent = param.description;
+    
+            // Render only tasks which are due this week and not done
+            toDosManipulator.getAllToDos().filter(task => task.project == param.name).forEach(element => {
+                if (!element.done) {
+                    renderTask(element);
+                }
+            });
+            break;    
+        }
+    
+    // Append the list of tasks to the DOM
+    document.querySelector('.right-side').appendChild(div);
 }
 
+function openTaskDetails(div, element) {
+    // Remove if open
+    if (document.querySelector('.task-details')) {
+        div.removeChild(document.querySelector('.task-details'))
+    }
+
+    let container = document.createElement('form');
+    container.classList.add("task-details")
+
+    
+
+
+    // Task properties
+    let taskName = document.createElement('input')
+    taskName.value = element.name;
+    container.appendChild(taskName);
+
+    let taskDescription = document.createElement('input');
+    taskDescription.value = element.description;
+    container.appendChild(taskDescription)
+
+    let taskDate = document.createElement('input');
+    taskDate.type = "date";
+    taskDate.value = element.dueDate.toISOString().split('T')[0];
+    container.appendChild(taskDate)
+
+
+    let taskProject = document.createElement('select');
+    projectsManipulator.getAllProjects().forEach(element => {
+        let option = document.createElement('option');
+        option.textContent = element.name;
+
+        taskProject.appendChild(option);
+    })
+    container.appendChild(taskProject)
+
+
+    let submitButton = document.createElement('button');
+    submitButton.textContent = "SUBMIT"
+    container.appendChild(submitButton);
+    
+    let closeButton = document.createElement('button');
+    closeButton.textContent = 'X';
+    closeButton.type = 'button'
+    closeButton.addEventListener('click', function() {
+        container.style.animation = 'notRevealAnimation 0.3s 1 forwards'
+        setTimeout(() => {
+            div.removeChild(container);
+        }, 300);
+    })
+    container.appendChild(closeButton)
+    div.appendChild(container);
+    container.style.animation = 'revealAnimation 0.3s 1 forwards'
+
+    
+    container.addEventListener('submit', function(event) {
+        event.preventDefault();
+        element.name = taskName.value;
+        element.description = taskDescription.value;
+        element.dueDate = new Date(taskDate.value);
+        element.project = taskProject.value;
+
+        div.removeChild(container);
+        generateStuff(utilityFunctions.getCurrentPage());
+
+    })
+}
