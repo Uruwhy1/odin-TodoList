@@ -164,20 +164,10 @@ function openTaskDetails(div, element) {
     })
     container.appendChild(taskProject)
 
-
-    let submitButton = document.createElement('button');
-    submitButton.textContent = "SUBMIT"
-    container.appendChild(submitButton);
     
     let closeButton = document.createElement('button');
     closeButton.textContent = 'X';
-    closeButton.type = 'button'
-    closeButton.addEventListener('click', function() {
-        container.style.animation = 'notRevealAnimation 0.3s 1 forwards'
-        setTimeout(() => {
-            div.removeChild(container);
-        }, 300);
-    })
+
     container.appendChild(closeButton)
     div.appendChild(container);
     container.style.animation = 'revealAnimation 0.3s 1 forwards'
@@ -191,6 +181,8 @@ function openTaskDetails(div, element) {
         element.project = taskProject.value;
 
         div.removeChild(container);
+        
+        
         projectsManipulator.addToProject(element, element.project);
         generateStuff(utilityFunctions.getCurrentPage());
 
@@ -252,7 +244,7 @@ export function openProjectDetails(element) {
 export function addProject() {
     // Remove if open
     if (document.querySelector('.project-form-add')) {
-        document.querySelector('.right-container').removeChild(document.querySelector('.project-form-add'))
+        document.querySelector('.projects-header').removeChild(document.querySelector('.project-form-add'))
     }
 
     let container = document.createElement('form');
@@ -265,21 +257,24 @@ export function addProject() {
     closeButton.addEventListener('click', function() {
         container.style.animation = 'notRevealAnimation 0.3s 1 forwards'
         setTimeout(() => {
-            document.querySelector('.right-container').removeChild(container);
+            document.querySelector('.projects-header').removeChild(container);
         }, 300);
     })
 
 
     // Project properties
     let projectName = document.createElement('input')
+    projectName.required = true;
+    projectName.placeholder = 'Project Name'
     container.appendChild(projectName);
 
     
     let projectDescription = document.createElement('input');
+    projectDescription.placeholder = 'Project Description'
     container.appendChild(projectDescription)
 
     let submitButton = document.createElement('button');
-    submitButton.textContent = "SUBMIT"
+    submitButton.textContent = "Create Project"
     container.appendChild(submitButton);
 
     
@@ -290,12 +285,12 @@ export function addProject() {
         project.name = projectName.value;
         project.description = projectDescription.value;
 
-        document.querySelector('.right-container').removeChild(container);
+        document.querySelector('.projects-header').removeChild(container);
         generateStuff(utilityFunctions.getCurrentPage());
 
         domManipulator.loadProjects();
     })
 
-    document.querySelector('.right-container').appendChild(container);
+    document.querySelector('.projects-header').appendChild(container);
     container.style.animation = 'revealAnimation 0.3s 1 forwards'
 }

@@ -177,3 +177,70 @@
 }
 
 
+/* ADD PROJECT DIALOG */
+
+.project-form-add {
+    position: absolute;
+    top: 15%;
+
+    padding: 10px;
+
+    background-color: #fff;
+    border: 2px solid gray;
+    border-radius: 5px;
+
+    width: 350px;
+
+    display: grid;
+    gap: 5px;
+    grid-template-areas:
+    'title title'
+    'description description'
+    'submit close';
+
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.project-form-add button:first-of-type {
+    grid-area: close;
+    place-self: end;
+    font-weight: 700;
+    font-size: 0.7em;
+
+    padding: 0px 5px;
+
+}
+.project-form-add button:last-of-type {
+    grid-area: submit;
+    width: fit-content;
+
+    padding: 3px;
+
+    color: var(--taskbar-accent);
+    font-weight: 500;
+
+    background-color: var(--hover);
+
+    border: 1px solid gray;
+    border-radius: 2px;
+}
+.project-form-add button:last-of-type:hover {
+    background-color: #dfdfdf;
+}
+.project-form-add button:last-of-type:active {
+    background-color: #c5c5c5;
+}
+
+.project-form-add input:first-of-type {
+    grid-area: title;
+}
+
+.project-form-add input:last-of-type {
+    grid-area: description;
+}
+
+.project-form-add input:focus {
+    outline: none;
+    border: 2px skyblue solid
+}

@@ -15,18 +15,7 @@
     color: gray;
 }
 
-/* ADD PROJECT DIALOG */
 
-.project-form-add {
-    position: absolute;
-    top: 15%;
-
-    border-radius: 15px;
-    padding: 50px;
-    height: 100px;
-
-    background-color: red;
-}
 
 /* ADD TASK FORM DIALOG */
 
@@ -60,13 +49,81 @@
 .task-details {
     position: absolute;
     top: 15%;
+    width: 500px;
 
-    border-radius: 15px;
-    padding: 50px;
-    height: 100px;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #fff;
+    border: 2px solid gray;
 
-    background-color: red;
+    display: grid;
+    place-content: center;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap:  5px 10px;
+    grid-template-areas: 
+    'title title'
+    'description description'
+    'project date'
 }
+
+.task-details input {
+    border: none;
+    border-bottom: 1px solid;
+    background-color: #00000000;
+}
+.task-details input:focus {
+    border-bottom: 1px solid var(--taskbar-accent);
+    outline: none;
+}
+
+.task-details input:first-child {
+    font-size: 2em;
+    font-weight: 500;
+    grid-area: title;
+}
+
+.task-details input:nth-child(2) {
+    font-size: 1.4em;
+    grid-area: description;
+}
+
+.task-details input:nth-child(3) {
+    font-size: 1.2em;
+    border: 1px solid;
+    grid-area: date;
+}
+
+.task-details select {
+    border: 1px solid;
+    background-color: #fff;
+
+    font-size: 1.2em;
+    padding: 5px;
+
+    grid-area: project;
+}
+
+.task-details button:last-of-type {
+    height: 15px;
+    width: 15px;
+    grid-area: title;
+
+    font-size: 0.8em;
+    font-weight: 1000;
+
+    border: none;
+    border-radius: 5px;
+
+
+    align-self: baseline;
+    justify-self: end;
+    text-align: center;
+
+
+}
+
+
 
 /* TASKS INBOX */
 
