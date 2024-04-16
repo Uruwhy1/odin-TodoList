@@ -15,7 +15,20 @@
     color: gray;
 }
 
-/* FORM DIALOG */
+/* ADD PROJECT DIALOG */
+
+.project-form-add {
+    position: absolute;
+    top: 15%;
+
+    border-radius: 15px;
+    padding: 50px;
+    height: 100px;
+
+    background-color: red;
+}
+
+/* ADD TASK FORM DIALOG */
 
 .form {
     display: none;

@@ -117,6 +117,14 @@
     color: #494949;
 }
 
+.projects-header .add-project {
+    color: var(--taskbar-accent);
+    stroke-width: 2;
+}
+.projects-header .add-project:hover {
+    animation: rotate 1s 1;
+}
+ 
 .projects {
     margin-left: 15px;
     display: flex;

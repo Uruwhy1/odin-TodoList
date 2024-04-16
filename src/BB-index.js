@@ -4,6 +4,7 @@ import './AA-sidebar.css';
 import './AA-right-side.css'
 
 import generateStuff from './BB-generate.js'
+import {addProject} from './BB-generate.js'
 import {domManipulator, toDosManipulator, projectsManipulator} from './BB-manipulators.js'
 
 export const masterController = (() => {
@@ -73,7 +74,7 @@ class ToDo {
     }
 }
 
-class Project {
+export class Project {
     constructor(name, description) {
         this.name = name;
         this.description = !description ? "No Description" : description;
@@ -92,8 +93,8 @@ const projectDefault = new Project('No Project');
 document.addEventListener('DOMContentLoaded', function() {
     generateStuff(utilityFunctions.getCurrentPage());
 
-    const button = document.querySelector('.add-task');
-    button.addEventListener('click', domManipulator.addTaskForm);
+    const addTaskButton = document.querySelector('.add-task');
+    addTaskButton.addEventListener('click', domManipulator.addTaskForm);
     const closeFormButton = document.querySelector('.close-button');
     closeFormButton.addEventListener('click', domManipulator.addTaskForm);
 
@@ -130,6 +131,9 @@ document.addEventListener('DOMContentLoaded', function() {
             utilityFunctions.setCurrentPage(pElement.textContent);
         });
     });
+
+    const addProjectButton = document.querySelector('.add-project');
+    addProjectButton.addEventListener('click', addProject);
 
 } 
 )
