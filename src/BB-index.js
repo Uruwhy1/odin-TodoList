@@ -76,7 +76,7 @@ class ToDo {
 class Project {
     constructor(name, description) {
         this.name = name;
-        this.description = description;
+        this.description = !description ? "No Description" : description;
         this.toDos = [];
 
         projectsManipulator.projectPushArray(this);
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
 )
 
 // TESTING 
-const project1 = new Project("Test Project", "this is the project description!");
+const project1 = new Project("Test Project");
 const todo1 = new ToDo("← Press to mark as done.", "description", "HIGH", new Date())
 
 const project2 = new Project("testProject1", "lorem ipsuuuuuuuuuuuuuuuuuuuum");

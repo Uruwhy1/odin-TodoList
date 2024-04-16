@@ -3,7 +3,7 @@
     grid-area: taskbar;
     display: grid;
     padding: 15px;
-    grid-template-rows: 50px 50px 160px auto auto 1fr;
+    grid-template-rows: 50px 50px 160px auto 1fr;
     grid-template-columns: 1fr;
     gap: 22px;
 
@@ -75,6 +75,14 @@
     flex-direction: column;
 }
 
+.list a {
+    text-decoration: none;
+}
+.list a:hover {
+    text-decoration: underline;
+    color: skyblue;
+}
+
 .list-item {
     display: flex;
     align-items: center;
@@ -99,34 +107,57 @@
 }
 
 
+
+.odin {
+    margin-bottom: 15px;
+}
+
 .projects-header {
     font-weight: 600;   
     color: #494949;
 }
 
 .projects {
-    margin-left: 45px;
+    margin-left: 15px;
     display: flex;
     align-content: center;
     flex-direction: column;
     gap: 0;
 }
 
-.projects div {
+.project-container {
+    display: flex;
+    align-items: center;
     padding: 6px;
     border-radius: 5px;
 
+    width: fit-content;
+}
+.project-container:hover {
+    background-color: var(--hover);
+}
+
+.loaded-project {
     font-weight: 300;
 
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
     gap: 10px;
 
     cursor: pointer;
+    padding-right: 10px;
+
 }
-.projects div:hover {
-    background-color: var(--hover);
+
+.edit-project {
+    margin-right: 4px;
 }
+.edit-project:hover, .remove-project:hover {
+    cursor:pointer;
+    transform: scale(1.1);
+}
+
 /* ALIGN WITH SVG */
 .projects div svg {
     vertical-align: text-bottom;

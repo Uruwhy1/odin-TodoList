@@ -1,9 +1,8 @@
-import { toDosManipulator, projectsManipulator } from "./BB-manipulators.js";
-import { utilityFunctions } from './BB-index.js'
+import { toDosManipulator, projectsManipulator, domManipulator } from "./BB-manipulators.js";
+import { masterController, utilityFunctions } from './BB-index.js'
 import { addDays, format, isBefore, isThisWeek, isToday, isTomorrow } from "date-fns";
 
 export default function generateStuff(param) {
-
     let header = document.querySelector('.header');
     let div = document.querySelector('.right-container');
     let subheader = document.querySelector('.subheader')
@@ -192,7 +191,60 @@ function openTaskDetails(div, element) {
         element.project = taskProject.value;
 
         div.removeChild(container);
+        projectsManipulator.addToProject(element, element.project);
         generateStuff(utilityFunctions.getCurrentPage());
 
     })
+}
+
+export function openProjectDetails(element) {
+    // Remove if open
+    if (document.querySelector('.project-details')) {
+        document.querySelector('.right-container').removeChild(document.querySelector('.project-details'))
+    }
+
+    let container = document.createElement('form');
+    container.classList.add('project-details');
+
+    let closeButton = document.createElement('button');
+    closeButton.type = 'button'
+    closeButton.textContent = "X";
+    container.appendChild(closeButton);
+    closeButton.addEventListener('click', function() {
+        container.style.animation = 'notRevealAnimation 0.3s 1 forwards'
+        setTimeout(() => {
+            document.querySelector('.right-container').removeChild(container);
+        }, 300);
+    })
+
+
+    // Project properties
+    let projectName = document.createElement('input')
+    projectName.value = element.name;
+    container.appendChild(projectName);
+
+    
+    let projectDescription = document.createElement('input');
+    projectDescription.value = element.description;
+    container.appendChild(projectDescription)
+
+    let submitButton = document.createElement('button');
+    submitButton.textContent = "SUBMIT"
+    container.appendChild(submitButton);
+
+    
+
+    container.addEventListener('submit', function(event) {
+        event.preventDefault();
+        element.name = projectName.value;
+        element.description = projectDescription.value;
+
+        document.querySelector('.right-container').removeChild(container);
+        generateStuff(utilityFunctions.getCurrentPage());
+
+        domManipulator.loadProjects();
+    })
+
+    document.querySelector('.right-container').appendChild(container);
+    container.style.animation = 'revealAnimation 0.3s 1 forwards'
 }
