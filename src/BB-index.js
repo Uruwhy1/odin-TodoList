@@ -8,8 +8,8 @@ import {addProject} from './BB-generate.js'
 import {domManipulator, toDosManipulator, projectsManipulator} from './BB-manipulators.js'
 
 export const masterController = (() => {
-    const toDosArray = [];
-    const projectsArray = [];
+    const toDosArray = JSON.parse(localStorage.getItem('toDosArray')) || [];
+    const projectsArray = JSON.parse(localStorage.getItem('projectsArray')) || [];
     
     return {
         toDosArray,
@@ -121,6 +121,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // render the tasks list and close modal
         domManipulator.addTaskForm()
         generateStuff(utilityFunctions.getCurrentPage());
+
+        // save to local storage
+        localStorage.setItem('toDosArray', JSON.stringify(masterController.toDosArray));
     });
 
     const sidebarButtons = document.querySelectorAll('.tasks .list-item');
@@ -135,12 +138,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const addProjectButton = document.querySelector('.add-project');
     addProjectButton.addEventListener('click', addProject);
 
+
 } 
 )
-
-// TESTING 
-const project1 = new Project("Test Project");
-const todo1 = new ToDo("← Press to mark as done.", "description", "HIGH", new Date())
-
-const project2 = new Project("testProject1", "lorem ipsuuuuuuuuuuuuuuuuuuuum");
-const todo2 = new ToDo("name2", "description", "MEDIUM", new Date())

@@ -192,7 +192,7 @@ function openTaskDetails(div, element) {
 export function openProjectDetails(element) {
     // Remove if open
     if (document.querySelector('.project-details')) {
-        document.querySelector('.right-container').removeChild(document.querySelector('.project-details'))
+        document.querySelector('.projects-header ').removeChild(document.querySelector('.project-details'))
     }
 
     let container = document.createElement('form');
@@ -205,7 +205,7 @@ export function openProjectDetails(element) {
     closeButton.addEventListener('click', function() {
         container.style.animation = 'notRevealAnimation 0.3s 1 forwards'
         setTimeout(() => {
-            document.querySelector('.right-container').removeChild(container);
+            document.querySelector('.projects-header ').removeChild(container);
         }, 300);
     })
 
@@ -221,7 +221,7 @@ export function openProjectDetails(element) {
     container.appendChild(projectDescription)
 
     let submitButton = document.createElement('button');
-    submitButton.textContent = "SUBMIT"
+    submitButton.textContent = "Edit Project"
     container.appendChild(submitButton);
 
     
@@ -231,13 +231,13 @@ export function openProjectDetails(element) {
         element.name = projectName.value;
         element.description = projectDescription.value;
 
-        document.querySelector('.right-container').removeChild(container);
+        document.querySelector('.projects-header').removeChild(container);
         generateStuff(utilityFunctions.getCurrentPage());
 
         domManipulator.loadProjects();
     })
 
-    document.querySelector('.right-container').appendChild(container);
+    document.querySelector('.projects-header ').appendChild(container);
     container.style.animation = 'revealAnimation 0.3s 1 forwards'
 }
 
@@ -265,6 +265,7 @@ export function addProject() {
     // Project properties
     let projectName = document.createElement('input')
     projectName.required = true;
+    projectName.maxLength = '14'
     projectName.placeholder = 'Project Name'
     container.appendChild(projectName);
 
@@ -289,8 +290,12 @@ export function addProject() {
         generateStuff(utilityFunctions.getCurrentPage());
 
         domManipulator.loadProjects();
+        localStorage.setItem('projectsArray', JSON.stringify(masterController.projectsArray));
+
     })
 
     document.querySelector('.projects-header').appendChild(container);
     container.style.animation = 'revealAnimation 0.3s 1 forwards'
+    
+
 }
