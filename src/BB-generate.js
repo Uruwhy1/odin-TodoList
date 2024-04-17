@@ -151,7 +151,11 @@ function openTaskDetails(div, element) {
 
     let taskDate = document.createElement('input');
     taskDate.type = "date";
-    taskDate.value = element.dueDate.toISOString().split('T')[0];
+    if (element.dueDate instanceof Date && !isNaN(element.dueDate.getTime())) {
+        taskDate.value = element.dueDate.toISOString().split('T')[0];
+    } else {
+        taskDate.value = element.dueDate.split('T')[0];
+    }
     container.appendChild(taskDate)
 
 
