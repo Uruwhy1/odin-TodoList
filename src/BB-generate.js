@@ -64,8 +64,9 @@ export default function generateStuff(param) {
     taskName.classList.add("bold");
 
     let dueString = document.createElement("p");
-    dueString.textContent = format(addDays(element.dueDate, 1), "LLL d");
+    dueString.textContent = format(element.dueDate, "LLL d");
     if (isBefore(element.dueDate, utilityFunctions.today())) {
+      console.log(element.dueDate, utilityFunctions.today());
       dueString.style.color = "red";
       dueString.classList.add("bold");
       dueString.style.textDecoration = "underline";
@@ -172,14 +173,17 @@ function openTaskDetails(div, element) {
   // Task properties
   let taskName = document.createElement("input");
   taskName.value = element.name;
+  taskName.classList.add("task-name");
   container.appendChild(taskName);
 
   let taskDescription = document.createElement("input");
   taskDescription.value = element.description;
+  taskDescription.classList.add("task-description");
   container.appendChild(taskDescription);
 
   let taskDate = document.createElement("input");
   taskDate.type = "date";
+  taskDate.classList.add("task-date");
   if (element.dueDate instanceof Date && !isNaN(element.dueDate.getTime())) {
     taskDate.value = element.dueDate.toISOString().split("T")[0];
   } else {
@@ -188,18 +192,19 @@ function openTaskDetails(div, element) {
   container.appendChild(taskDate);
 
   let taskProject = document.createElement("select");
+  taskProject.classList.add("task-project");
   projectsManipulator.getAllProjects().forEach((element) => {
     let option = document.createElement("option");
     option.textContent = element.name;
-
     taskProject.appendChild(option);
   });
   container.appendChild(taskProject);
 
   let closeButton = document.createElement("button");
   closeButton.textContent = "X";
-
+  closeButton.classList.add("close-button");
   container.appendChild(closeButton);
+
   div.appendChild(container);
   container.style.animation = "revealAnimation 0.3s 1 forwards";
 
@@ -211,7 +216,6 @@ function openTaskDetails(div, element) {
     element.project = taskProject.value;
 
     div.removeChild(container);
-
     projectsManipulator.addToProject(element, element.project);
     generateStuff(utilityFunctions.getCurrentPage());
   });

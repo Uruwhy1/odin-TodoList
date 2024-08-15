@@ -155,21 +155,11 @@ export const domManipulator = (() => {
     let form = document.querySelector(".form");
 
     // Set the value of the date input to today's date
-    document.getElementById("due-date").value = utilityFunctions
-      .today()
-      .toISOString()
-      .split("T")[0];
+    const dateInput = document.getElementById("due-date");
 
-    // display form and animate
-    if (form.style.display == "block") {
-      form.style.animation = "notRevealAnimation 1 0.3s ease forwards";
-      setTimeout(() => {
-        form.style.display = "none";
-      }, 300);
-    } else {
-      form.style.display = "block";
-      form.style.animation = "revealAnimation 1 0.3s ease forwards";
-    }
+    dateInput.value = utilityFunctions.today();
+
+    form.classList.toggle("hidden");
   }
 
   return {
